@@ -11,4 +11,11 @@ num_X = X_total/dx;
 
 index = @(x,t) x + num_X*t;
 revIndex = @(i) [mod(i,num_X),floor(mod(i, num_T*num_X)/num_X)];
+rho_0 = @(x) 2;
 indexMax = index(X_total,T_total);
+S = sparse(indexMax);
+B = zeros(indexMax,1);
+for i=0:indexMax
+    [currX,currT] = revIndex(i);
+    
+end
