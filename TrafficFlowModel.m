@@ -1,5 +1,5 @@
-v_max = 26.8224;
-rho_max = 3;
+v = 26.8224;
+rho_max = 0.2;
 dx = 1;
 dt = 1;
 rho_initial = 5;
@@ -17,5 +17,13 @@ S = sparse(indexMax);
 B = zeros(indexMax,1);
 for i=0:indexMax
     [currX,currT] = revIndex(i);
-    
+    if currX == 0 || currX == X_total
+        S(i,i) = 1;
+        B(i,1) = rho_initial;
+    elseif currT == 0
+        S(i,i) = 1;
+        B(i,1) = rho_0(currX);
+    else
+        
+    end
 end
