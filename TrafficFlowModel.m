@@ -3,7 +3,7 @@ rho_max = 0.2;
 dx = 1;
 dt = 1;
 rho_initial = 0.15;
-rho_final = 0.15;
+rho_final = 0.05;
 xn = 5;
 tn = 5;
 
@@ -28,16 +28,12 @@ for i=0:indexMax
     elseif currT == 0
         S(i+1,i+1) = 1;
         B(i+1,1) = rho_0(currX);
-    elseif currT ~= tn-1
-        X_next = index(currX+dx,currT);
-        T_next = index(currX,currT+dt);
-        if(T_next+1>=25)
-            currX
-            currT
-        end
-        S(i+1,X_next+1) = -v_max/(2*rho_max*dx);
-        S(i+1,T_next+1) = 1/dt;
-        S(i+1,i+1) = -(1/dt) + v_max/(2*rho_max*dx);
+    else
+        X_prev = index(currX-dx,currT);
+        T_prev = index(currX,currT-dt);
+        S(i+1,X_next+1) = v_max/(2*rho_max*dx);
+        S(i+1,T_next+1) = -1/dt;
+        S(i+1,i+1) = (1/dt) - v_max/(2*rho_max*dx);
         B(i+1,1) = 0;
     end
     
