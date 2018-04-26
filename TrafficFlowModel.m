@@ -4,23 +4,26 @@ dx = 1;
 dt = 1;
 rho_initial = 0.15;
 rho_final = 0.15;
-X_total = 5;
-T_total = 5;
-num_T = T_total/dt;
-num_X = X_total/dx;
+X_total = 2;
+T_total = 2;
+num_T = (T_total/dt);
+num_X = (X_total/dx);
+xn = 2;
+tn = 2;
 
-index = @(x,t) x + num_X*t;
-revIndex = @(i) [(mod(i,num_X)),(floor(mod(i, num_T*num_X)/num_X))];
+index = @(x,t) x + xn*t;
+revIndex = @(i) [mod(i,xn),floor(mod(i, tn*xn)/xn)];
 rho_0 = @(x) 0;
-indexMax = index(X_total,T_total);
-S = sparse(indexMax);
-B = zeros(indexMax,1);
-revIndex(0)
-for i=0:indexMax-1
+indexMax = index(xn-1,tn-1);
+S = sparse(indexMax+1);
+B = zeros(indexMax+1,1);
+indexMax
+num = 0;
+for i=0:indexMax
     currCoord = revIndex(i);
     currX = currCoord(1);
     currT = currCoord(2);
-    if currX == 0 || currX == X_total
+    if (currX == 0 || currX == xn-1)
         S(i+1,i+1) = 1;
         B(i+1,1) = rho_initial;
     elseif currT == 0
@@ -35,5 +38,4 @@ for i=0:indexMax-1
         B(i+1,1) = 0;
     end
 end
-Rho = S^-1 * B;
-Rho
+Rho = S^-1 * B
