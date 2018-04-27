@@ -31,8 +31,8 @@ for i=0:indexMax
     else
         X_prev = index(currX-dx,currT);
         T_prev = index(currX,currT-dt);
-        S(i+1,X_next+1) = v_max/(2*rho_max*dx);
-        S(i+1,T_next+1) = -1/dt;
+        S(i+1,X_prev+1) = v_max/(2*rho_max*dx);
+        S(i+1,T_prev+1) = -1/dt;
         S(i+1,i+1) = (1/dt) - v_max/(2*rho_max*dx);
         B(i+1,1) = 0;
     end
