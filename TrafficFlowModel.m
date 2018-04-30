@@ -13,7 +13,6 @@ rho_0 = @(x) 0;
 indexMax = index(xn-1,tn-1);
 S = sparse(indexMax+1);
 B = zeros(indexMax+1,1);
-indexMax
 num = 0;
 for i=0:indexMax
     currCoord = revIndex(i);
@@ -22,10 +21,7 @@ for i=0:indexMax
     if (currX == 0)
         S(i+1,i+1) = 1;
         B(i+1,1) = rho_initial;
-    elseif(currX == xn-1)
-        S(i+1,i+1) = 1;
-        B(i+1,1) = rho_final;
-    elseif currT == 0
+    else if currT == 0
         S(i+1,i+1) = 1;
         B(i+1,1) = rho_0(currX);
     else
@@ -35,6 +31,7 @@ for i=0:indexMax
         S(i+1,T_prev+1) = -1/dt;
         S(i+1,i+1) = (1/dt) - v_max/(2*rho_max*dx);
         B(i+1,1) = 0;
+        end
     end
     
 end
