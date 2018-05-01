@@ -1,18 +1,16 @@
 v_max = 26.8224; %typical speed on highway (60 mph) in m/s
 rho_max = 0.28; %max car density assuming we have only small Fiat 500s on the freeway
-dx = 1; %distance steps
-dt = 1; %time steps
+dx = 1; %distance steps, should be kept at 1 because smallest step is a meter
+dt = 1; %time steps, should be kept at 1 because smallest step is a second
 rho_initial = 0.2083; %density based on average car length of 4.8 m
-xn = 5; %space of 5 meters
-tn = 5; %time interval of 5 seconds
+xn = 20; %space of 5 meters
+tn = 20; %time interval of 5 seconds
 X = 1:dx:xn;
 T = 1:dt:tn;
-xn = length(X)/dx;
-tn = length(T)/dt;
 X = reshape(X,[length(X),1]);
 T = reshape(T,[length(T),1]);
 
-index = @(x,t) x + xn*t;
+index = @(x, t) x + xn*t;
 revIndex = @(i) [mod(i,xn),floor(mod(i, tn*xn)/xn)];
 rho_0 = @(x) (sin(x) + 1)/8; %arbitrary function to determine the initial distribution of cars along the stretch of road
 indexMax = index(xn-1,tn-1);
@@ -41,7 +39,7 @@ for i=0:indexMax
 end
 Rho = S^-1 * B;
 Rho = reshape(Rho,[xn,tn]) %reshapes the matrix such that rows signify x-values and columns signify t-values
-mx = max(max(Rho))
+mx = max(max(Rho));
 for i=1:length(T)
     pause(1)
     currRho = Rho(:,i);
