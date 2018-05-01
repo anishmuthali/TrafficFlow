@@ -5,6 +5,12 @@ dt = 1; %time steps
 rho_initial = 0.2083; %density based on average car length of 4.8 m
 xn = 5; %space of 5 meters
 tn = 5; %time interval of 5 seconds
+X = 1:dx:xn;
+T = 1:dt:tn;
+xn = length(X)/dx;
+tn = length(T)/dt;
+X = reshape(X,[length(X),1]);
+T = reshape(T,[length(T),1]);
 
 index = @(x,t) x + xn*t;
 revIndex = @(i) [mod(i,xn),floor(mod(i, tn*xn)/xn)];
@@ -34,7 +40,16 @@ for i=0:indexMax
     
 end
 Rho = S^-1 * B;
-Rho = reshape(Rho,[5,5]) %reshapes the matrix such that rows signify x-values and columns signify t-values
+Rho = reshape(Rho,[xn,tn]) %reshapes the matrix such that rows signify x-values and columns signify t-values
+mx = max(max(Rho))
+for i=1:length(T)
+    pause(1)
+    currRho = Rho(:,i);
+    plot(X,currRho);
+    xlabel('X');
+    ylabel('Rho');
+    ylim([0 mx])
+end
 
 %Interpretation of results: 
 %--------------------------
